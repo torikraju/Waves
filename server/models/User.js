@@ -43,7 +43,7 @@ const userSchema = new Schema({
   token: {
     type: String,
   },
-}, { timestamp: true });
+}, { timestamps: true });
 
 userSchema.pre('save', async function (next) {
   try {

@@ -4,8 +4,12 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 
 require('dotenv').config();
+const { startUpToDo } = require('./util/StartUp');
 
 const userRouter = require('./routes/User');
+const brandRouter = require('./routes/Brand');
+const woodRouter = require('./routes/Wood');
+const productRouter = require('./routes/Product');
 
 const app = express();
 const port = process.env.PORT || 3002;
@@ -22,10 +26,13 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/user', userRouter);
+app.use('/api/brand', brandRouter);
+app.use('/api/wood', woodRouter);
+app.use('/api/product', productRouter);
 
 
 mongoose
   .set('useCreateIndex', true)
   .connect(process.env.DATABASE, { useNewUrlParser: true, useFindAndModify: false })
-  .then(() => app.listen(port, () => console.log(`Example app listening on port ${port}!`)))
+  .then(() => app.listen(port, () => startUpToDo(port)))
   .catch((e) => console.log(e));
